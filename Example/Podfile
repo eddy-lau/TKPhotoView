@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'TKPhotoView_Example' do
+  pod 'TKPhotoView', :path => '../'
+
+  target 'TKPhotoView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
