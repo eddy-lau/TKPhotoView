@@ -33,7 +33,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="550" height="58"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -134,22 +134,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="SampleThumbnail1" translatesAutoresizingMaskIntoConstraints="NO" id="l3d-Bt-Fem">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SampleThumbnail1" translatesAutoresizingMaskIntoConstraints="NO" id="l3d-Bt-Fem">
                                 <rect key="frame" x="13" y="79" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Hez-R2-Hg8"/>
                                     <constraint firstAttribute="height" constant="100" id="zbe-7X-3MP"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SampleThumbnail2" translatesAutoresizingMaskIntoConstraints="NO" id="Gye-gh-mVT">
+                                <rect key="frame" x="123" y="79" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="34G-3J-OCP"/>
+                                    <constraint firstAttribute="width" constant="100" id="aAU-ri-JDK"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Gye-gh-mVT" firstAttribute="top" secondItem="l3d-Bt-Fem" secondAttribute="top" id="6PV-7U-K8E"/>
                             <constraint firstItem="l3d-Bt-Fem" firstAttribute="leading" secondItem="VOf-5y-LXq" secondAttribute="leading" constant="13" id="73P-YC-ShP"/>
                             <constraint firstItem="l3d-Bt-Fem" firstAttribute="top" secondItem="KLG-9I-QH2" secondAttribute="bottom" constant="15" id="MD6-5f-Mcr"/>
+                            <constraint firstItem="Gye-gh-mVT" firstAttribute="leading" secondItem="l3d-Bt-Fem" secondAttribute="trailing" constant="10" id="oh0-ZS-HRr"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="thumbnail1" destination="l3d-Bt-Fem" id="1x8-VH-jTe"/>
+                        <outlet property="thumbnail2" destination="Gye-gh-mVT" id="YFO-CN-RU6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eLX-UO-Mq1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -159,5 +169,6 @@
     </scenes>
     <resources>
         <image name="SampleThumbnail1" width="213" height="120"/>
+        <image name="SampleThumbnail2" width="180" height="120"/>
     </resources>
 </document>

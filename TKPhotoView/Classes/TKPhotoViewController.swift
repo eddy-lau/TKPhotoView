@@ -82,7 +82,7 @@ public class TKPhotoViewController : UIViewController, UICollectionViewDataSourc
     
     // MARK: - Public properties
     
-    var indexOfCurrentPhoto : Int {
+    public var indexOfCurrentPhoto : Int {
         
         get {
             if isViewLoaded() {
@@ -820,7 +820,7 @@ public class TKPhotoViewController : UIViewController, UICollectionViewDataSourc
             
             UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
                 
-                fromVC.view.alpha = 0.0
+                fromVC.view.alpha = 1.0
                 toVC.view.alpha = 1.0
                 
             }) { completed -> Void in
@@ -881,6 +881,7 @@ public class TKPhotoViewController : UIViewController, UICollectionViewDataSourc
             
             imageView.frame = transitionContext.containerView()!.convertRect(fromVC.rectOfCurrentPhoto, fromView: fromVC.view)
             fromVC.collectionView.alpha = 0.0
+            thumbnailView.hidden = true
             
             let imageViewToFrame = transitionContext.containerView()!.convertRect(thumbnailView.bounds, fromView: thumbnailView)
             
@@ -895,6 +896,7 @@ public class TKPhotoViewController : UIViewController, UICollectionViewDataSourc
                 imageView.removeFromSuperview()
                 fromVC.collectionView.alpha = 1.0
                 fromVC.view.alpha = 1.0
+                self.thumbnailView.hidden = false
                 
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             })
@@ -910,7 +912,7 @@ public class TKPhotoViewController : UIViewController, UICollectionViewDataSourc
     
     class DragOutAnimator : NSObject, UIViewControllerAnimatedTransitioning {
         
-        static let duration = NSTimeInterval(0.2)
+        static let duration = NSTimeInterval(0.4)
         
         let thumbnailView:UIView
         let thumbnail:UIImage
@@ -938,6 +940,7 @@ public class TKPhotoViewController : UIViewController, UICollectionViewDataSourc
             transitionContext.containerView()!.addSubview(fromVC.view)
             
             fromVC.collectionView.alpha = 0.0
+            thumbnailView.alpha = 0.0
             
             UIView.animateWithDuration(DragOutAnimator.duration, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
                 
@@ -948,6 +951,7 @@ public class TKPhotoViewController : UIViewController, UICollectionViewDataSourc
                 
                 fromVC.collectionView.alpha = 1.0
                 fromVC.view.alpha = 1.0
+                self.thumbnailView.alpha = 1.0
                 
                 if transitionContext.transitionWasCancelled() {
                     

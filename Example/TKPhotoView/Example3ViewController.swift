@@ -12,20 +12,21 @@ import TKPhotoView
 class Example3ViewController: UIViewController {
 
     @IBOutlet weak var thumbnail1 : UIImageView!
+    @IBOutlet weak var thumbnail2 : UIImageView!
     
     var thumbnails : [UIImageView] {
-        return [thumbnail1]
+        return [thumbnail1,thumbnail2]
     }
     
     var photos : [UIImage] {
-        return [UIImage(named:"SampleImage1")!]
+        return [UIImage(named:"SampleImage1")!, UIImage(named:"SampleImage2")!]
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Example3ViewController.didTapThumbnail))
         thumbnails.forEach { thumbnail in
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Example3ViewController.didTapThumbnail))
             thumbnail.addGestureRecognizer(tapGesture)
         }
     }
@@ -36,8 +37,11 @@ extension Example3ViewController {
     
     func didTapThumbnail(gesture:UIGestureRecognizer) {
         
+        let index = thumbnails.indexOf(gesture.view as! UIImageView)!
+        
         let photoViewController = TKPhotoViewController()
         photoViewController.dataSource = self
+        photoViewController.indexOfCurrentPhoto = index
         navigationController?.pushPhotoViewController(photoViewController, animated: true)
         
     }
@@ -55,12 +59,6 @@ extension Example3ViewController : TKPhotoViewControllerDataSource {
         return photos[index]
     }
 
-    /*
-    func photoViewController(controller: TKPhotoViewController, photoURLToShowAtIndex index: Int) -> NSURL? {
-        return NSURL(string: "http://www.spyderonlines.com/images/wallpapers/beautiful-pictures/beautiful-pictures-6.jpg")
-    }
-    */
-    
     func photoViewController(controller: TKPhotoViewController, placeHolderImageAtIndex index: Int) -> UIImage? {
         return thumbnails[index].image
     }
