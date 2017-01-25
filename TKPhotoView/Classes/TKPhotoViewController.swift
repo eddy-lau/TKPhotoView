@@ -649,7 +649,7 @@ public class TKPhotoViewController : UIViewController, UICollectionViewDataSourc
     // MARK: Pan gesture
     
     public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return imageIsCentered
+        return imageIsCentered && transitionFromView != nil
     }
     
     private func dragTransitionDidCancel() {

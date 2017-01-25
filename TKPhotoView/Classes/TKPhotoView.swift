@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import AlamofireImage
 
 protocol TKPhotoViewDownloadProgressDelegate: class {
     
@@ -129,50 +130,29 @@ class TKPhotoView : UIScrollView {
     
     func setImageURL(url:NSURL, placeholder:UIImage?) {
         
-        if let downloadingURL = imageView.af_imageRequestOperation?.request.URL {
-            if downloadingURL == url {
-                return
-            }
-        }
-        
         let req = NSURLRequest(URL: url)
         userInteractionEnabled = false
         
         var cached = false
         
-        
-        imageView.setImageWithURLRequest(req, placeholderImage: placeholder, success: { (req, resp, image) in
+        imageView.af_setImageWithURLRequest(req, placeholderImage: placeholder, filter: nil, progress: { (bytesRead, totalBytesRead, totalExpectedBytesToRead) in
             
-            self.image = image
-            self.userInteractionEnabled = true
+            let progress = CGFloat(totalBytesRead) / CGFloat(totalExpectedBytesToRead)
+            self.downloadProgressDelegate?.photoView(self, didDownloadWithProgress: progress)
             
-            cached = self.imageView.af_imageRequestOperation == nil
+        }, progressQueue: dispatch_get_main_queue(), imageTransition: .None, runImageTransitionIfCached: false) { (response) in
 
-            if !cached {
-                
-                self.imageView.af_imageRequestOperation.setDownloadProgressBlock(nil)
+            self.userInteractionEnabled = true
+            if response.result.isSuccess {
                 self.downloadProgressDelegate?.photoViewDidStopDownload(self, success: true)
+            } else {
+                self.downloadProgressDelegate?.photoViewDidStopDownload(self, success: false)
             }
             
-        }, failure: { (req, resp, error) in
-            
-            self.imageView.af_imageRequestOperation.setDownloadProgressBlock(nil)
-            self.downloadProgressDelegate?.photoViewDidStopDownload(self, success: false)
-            
-        })
+        }
+        downloadProgressDelegate?.photoViewDidStartDownload(self)
         relayout()
         
-        if !cached {
-            
-            imageView.af_imageRequestOperation.setDownloadProgressBlock({ bytesRead, totalBytesRead, totalBytesExpectedToRead in
-                
-                let progress = CGFloat(totalBytesRead) / CGFloat(totalBytesExpectedToRead)
-                self.downloadProgressDelegate?.photoView(self, didDownloadWithProgress: progress)
-                
-            })
-            
-            downloadProgressDelegate?.photoViewDidStartDownload(self)
-        }
     }
     
     func computeZoomScales(imageSize: CGSize) -> (min: CGFloat, max: CGFloat, current: CGFloat) {

@@ -13,13 +13,14 @@ class Example3ViewController: UIViewController {
 
     @IBOutlet weak var thumbnail1 : UIImageView!
     @IBOutlet weak var thumbnail2 : UIImageView!
+    @IBOutlet weak var thumbnail3 : UIImageView!
     
     var thumbnails : [UIImageView] {
-        return [thumbnail1,thumbnail2]
+        return [thumbnail1,thumbnail2,thumbnail3]
     }
     
     var photos : [UIImage] {
-        return [UIImage(named:"SampleImage1")!, UIImage(named:"SampleImage2")!]
+        return [UIImage(named:"SampleImage1")!, UIImage(named:"SampleImage2")!, UIImage(named:"SampleImage3")!]
     }
     
     override func viewDidLoad() {
